@@ -1,0 +1,984 @@
+<!DOCTYPE html>
+<html lang="es" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CT Arquitectos | Arquitectura & Diseño</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://code.iconify.design/3/3.1.0/iconify.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: { inter: ['Inter', 'sans-serif'] }
+                }
+            }
+        }
+    </script>
+    <style>
+        *{font-family:'Inter',sans-serif;box-sizing:border-box}
+        body{background:#050505;color:#fff;margin:0}
+        ::-webkit-scrollbar{width:6px}
+        ::-webkit-scrollbar-track{background:#0a0a0a}
+        ::-webkit-scrollbar-thumb{background:#262626;border-radius:3px}
+        ::-webkit-scrollbar-thumb:hover{background:#404040}
+        @keyframes fadeInUp{from{opacity:0;transform:translateY(30px)}to{opacity:1;transform:translateY(0)}}
+        @keyframes scaleIn{from{opacity:0;transform:scale(.92)}to{opacity:1;transform:scale(1)}}
+        @keyframes slideInRight{from{opacity:0;transform:translateX(40px)}to{opacity:1;transform:translateX(0)}}
+        @keyframes slideOutRight{to{opacity:0;transform:translateX(100px)}}
+        @keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-10px)}}
+        @keyframes checkDraw{to{stroke-dashoffset:0}}
+        .anim-fiu{animation:fadeInUp .8s ease-out forwards;opacity:0}
+        .anim-si{animation:scaleIn .5s ease-out forwards;opacity:0}
+        .d1{animation-delay:.1s}.d2{animation-delay:.2s}.d3{animation-delay:.3s}.d4{animation-delay:.4s}.d5{animation-delay:.5s}.d6{animation-delay:.6s}.d7{animation-delay:.7s}
+        .reveal{opacity:0;transform:translateY(30px);transition:all .8s ease-out}
+        .reveal.visible{opacity:1;transform:translateY(0)}
+        .glass{background:rgba(10,10,10,.75);backdrop-filter:blur(12px);border:1px solid rgba(255,255,255,.05)}
+        .project-card img{transition:transform .7s ease,filter .7s ease}
+        .project-card:hover img{transform:scale(1.08);filter:brightness(.55)}
+        .project-card .overlay{opacity:0;transition:opacity .5s ease}
+        .project-card:hover .overlay{opacity:1}
+        .service-card{transition:all .4s ease}
+        .service-card:hover{transform:translateY(-5px);border-color:rgba(255,255,255,.2);box-shadow:0 8px 30px rgba(255,255,255,.04)}
+        .nav-link{position:relative;transition:color .3s}
+        .nav-link::after{content:'';position:absolute;bottom:-4px;left:0;width:0;height:1px;background:#fff;transition:width .3s}
+        .nav-link:hover::after,.nav-link.active::after{width:100%}
+        .nav-link:hover,.nav-link.active{color:#fff}
+        .fi{background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.08);color:#fff;padding:12px 16px;border-radius:8px;width:100%;transition:border-color .3s,box-shadow .3s;font-size:14px;outline:none}
+        .fi:focus{border-color:rgba(255,255,255,.3);box-shadow:0 0 0 3px rgba(255,255,255,.05)}
+        .fi::placeholder{color:#57534e}
+        .admin-sl{transition:all .3s;border-left:2px solid transparent}
+        .admin-sl:hover,.admin-sl.active{background:rgba(255,255,255,.05);border-left-color:#d4d4d4;color:#d4d4d4}
+        .toast{animation:slideInRight .4s ease-out forwards}
+        .toast.out{animation:slideOutRight .3s ease-in forwards}
+        .modal-bg{background:rgba(0,0,0,.75);backdrop-filter:blur(8px)}
+        .gradient-text{background:linear-gradient(135deg,#ffffff,#a3a3a3);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+        .stat-num{background:linear-gradient(135deg,#ffffff,#d4d4d4);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+        .filter-btn{transition:all .3s}
+        .filter-btn.active{background:rgba(255,255,255,.1);color:#fff;border-color:rgba(255,255,255,.2)}
+        .admin-scroll::-webkit-scrollbar{width:4px}
+        .admin-scroll::-webkit-scrollbar-track{background:transparent}
+        .admin-scroll::-webkit-scrollbar-thumb{background:#333;border-radius:2px}
+        .btn-primary{padding:16px 32px;background:#fff;color:#050505;border-radius:9999px;font-size:14px;font-weight:500;border:none;cursor:pointer;text-decoration:none;display:inline-flex;align-items:center;justify-content:center;transition:all .3s}
+        .btn-primary:hover{box-shadow:0 8px 30px rgba(255,255,255,.15);transform:scale(1.05)}
+        .btn-primary-sm{padding:12px 24px;background:#fff;color:#050505;border-radius:8px;font-size:14px;font-weight:500;border:none;cursor:pointer;transition:all .3s}
+        .btn-primary-sm:hover{box-shadow:0 8px 30px rgba(255,255,255,.15)}
+        .btn-outline{padding:16px 32px;border-radius:9999px;border:1px solid rgba(255,255,255,.15);background:transparent;font-size:14px;font-weight:300;color:#fff;text-decoration:none;display:inline-flex;align-items:center;justify-content:center;transition:all .3s}
+        .btn-outline:hover{border-color:rgba(255,255,255,.3);background:rgba(255,255,255,.03)}
+        @media(max-width:768px){.hero-title{font-size:2.5rem!important;line-height:1!important}}
+    </style>
+</head>
+<body>
+
+<!-- TOAST -->
+<div id="toast-box" style="position:fixed;bottom:24px;right:24px;z-index:99999;display:flex;flex-direction:column;gap:12px;"></div>
+
+<!-- THANK YOU MODAL -->
+<div id="thank-modal" style="position:fixed;inset:0;z-index:9998;display:none;align-items:center;justify-content:center;background:rgba(0,0,0,.75);backdrop-filter:blur(8px);">
+    <div class="anim-si" style="background:#171717;border:1px solid #262626;border-radius:16px;padding:40px;max-width:420px;margin:0 16px;text-align:center;position:relative;overflow:hidden;">
+        <div style="position:absolute;top:-60px;right:-60px;width:140px;height:140px;border-radius:50%;background:rgba(255,255,255,.03);filter:blur(40px);"></div>
+        <div style="position:relative;">
+            <div style="width:80px;height:80px;margin:0 auto 24px;border-radius:50%;background:rgba(255,255,255,.06);display:flex;align-items:center;justify-content:center;">
+                <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#d4d4d4" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M20 6L9 17l-5-5" style="stroke-dasharray:30;stroke-dashoffset:30;animation:checkDraw .6s .3s ease forwards"/>
+                </svg>
+            </div>
+            <h3 style="font-size:24px;font-weight:600;margin-bottom:12px;">¡Gracias por contactarnos!</h3>
+            <p style="color:#a8a29e;font-size:14px;line-height:1.7;margin-bottom:24px;">Agradecemos enormemente su confianza en <span style="color:#fff;font-weight:500;">CT Arquitectos</span>. Hemos recibido su mensaje y nos pondremos en contacto con usted en un plazo máximo de 24 horas hábiles. Su proyecto es importante para nosotros.</p>
+            <button onclick="closeThankModal()" class="btn-primary-sm">Entendido</button>
+        </div>
+    </div>
+</div>
+
+<!-- NAVIGATION -->
+<nav id="navbar" style="position:fixed;top:0;width:100%;z-index:100;transition:all .5s;">
+    <div style="max-width:1280px;margin:0 auto;padding:16px 24px;display:flex;align-items:center;justify-content:space-between;">
+        <a href="#hero" style="display:flex;align-items:center;gap:10px;text-decoration:none;" class="group">
+            <div style="width:36px;height:36px;border-radius:8px;background:#fff;display:flex;align-items:center;justify-content:center;color:#050505;font-weight:700;font-size:13px;transition:transform .3s;letter-spacing:-0.02em;" class="group-hover:scale-110">CT</div>
+            <span style="color:#fff;font-weight:600;font-size:18px;letter-spacing:-0.025em;">Arquitectos</span>
+        </a>
+        <div style="display:flex;align-items:center;gap:32px;" class="hidden md:flex">
+            <a href="#hero" class="nav-link active" data-section="hero" style="font-size:14px;font-weight:300;color:#a8a29e;text-decoration:none;">Inicio</a>
+            <a href="#about" class="nav-link" data-section="about" style="font-size:14px;font-weight:300;color:#a8a29e;text-decoration:none;">Nosotros</a>
+            <a href="#projects" class="nav-link" data-section="projects" style="font-size:14px;font-weight:300;color:#a8a29e;text-decoration:none;">Proyectos</a>
+            <a href="#services" class="nav-link" data-section="services" style="font-size:14px;font-weight:300;color:#a8a29e;text-decoration:none;">Servicios</a>
+            <a href="#contact" class="nav-link" data-section="contact" style="font-size:14px;font-weight:300;color:#a8a29e;text-decoration:none;">Contacto</a>
+        </div>
+        <div style="display:flex;align-items:center;gap:12px;">
+            <a href="#contact" class="btn-primary hidden sm:inline-flex" style="padding:10px 20px;font-size:12px;">Cotizar Proyecto</a>
+            <button onclick="toggleMobile()" class="md:hidden" style="color:#fff;padding:8px;background:none;border:none;cursor:pointer;" id="mobile-toggle">
+                <span class="iconify" data-icon="lucide:menu" data-width="22"></span>
+            </button>
+        </div>
+    </div>
+    <div id="mobile-menu" class="glass md:hidden" style="display:none;border-top:1px solid rgba(255,255,255,.05);">
+        <div style="padding:16px 24px;display:flex;flex-direction:column;gap:12px;">
+            <a href="#hero" onclick="closeMobile()" style="font-size:14px;color:#a8a29e;text-decoration:none;padding:8px 0;">Inicio</a>
+            <a href="#about" onclick="closeMobile()" style="font-size:14px;color:#a8a29e;text-decoration:none;padding:8px 0;">Nosotros</a>
+            <a href="#projects" onclick="closeMobile()" style="font-size:14px;color:#a8a29e;text-decoration:none;padding:8px 0;">Proyectos</a>
+            <a href="#services" onclick="closeMobile()" style="font-size:14px;color:#a8a29e;text-decoration:none;padding:8px 0;">Servicios</a>
+            <a href="#contact" onclick="closeMobile()" style="font-size:14px;color:#a8a29e;text-decoration:none;padding:8px 0;">Contacto</a>
+            <a href="#contact" onclick="closeMobile()" class="btn-primary" style="margin-top:8px;padding:10px 20px;font-size:12px;">Cotizar Proyecto</a>
+        </div>
+    </div>
+</nav>
+
+<!-- HERO -->
+<section id="hero" style="position:relative;min-height:100vh;display:flex;align-items:center;justify-content:center;overflow:hidden;">
+    <div style="position:absolute;inset:0;">
+        <img id="hero-img" src="https://picsum.photos/seed/arch-hero-ct/1920/1080" alt="Arquitectura" style="width:100%;height:100%;object-fit:cover;opacity:.35;">
+        <div style="position:absolute;inset:0;background:linear-gradient(to top,#050505,#05050599,transparent);"></div>
+        <div style="position:absolute;inset:0;background:linear-gradient(to right,#05050580,transparent);"></div>
+    </div>
+    <div style="position:absolute;top:25%;left:25%;width:384px;height:384px;border-radius:50%;background:rgba(255,255,255,.02);filter:blur(100px);animation:float 6s ease-in-out infinite;"></div>
+    <div style="position:absolute;bottom:25%;right:25%;width:320px;height:320px;border-radius:50%;background:rgba(255,255,255,.015);filter:blur(100px);animation:float 6s ease-in-out infinite;animation-delay:-3s;"></div>
+    <div style="position:relative;z-index:10;max-width:1024px;margin:0 auto;padding:0 24px;text-align:center;">
+        <div class="anim-fiu d1" style="display:inline-flex;align-items:center;gap:8px;padding:8px 16px;border-radius:9999px;border:1px solid rgba(255,255,255,.1);background:rgba(255,255,255,.03);margin-bottom:32px;">
+            <span style="width:8px;height:8px;border-radius:50%;background:#d4d4d4;"></span>
+            <span style="font-size:12px;font-weight:300;color:#a8a29e;letter-spacing:.05em;">Diseñando espacios que inspiran</span>
+        </div>
+        <h1 id="hero-title" class="anim-fiu d2 hero-title" style="font-size:4.5rem;font-weight:600;letter-spacing:-0.025em;line-height:1.05;margin-bottom:24px;">
+            Arquitectura con<br><span class="gradient-text">alma y propósito</span>
+        </h1>
+        <p id="hero-subtitle" class="anim-fiu d3" style="color:#a8a29e;font-weight:300;font-size:18px;max-width:640px;margin:0 auto 40px;line-height:1.7;">
+            Transformamos visiones en espacios extraordinarios. Cada proyecto refleja nuestra pasión por el diseño, la funcionalidad y la excelencia arquitectónica.
+        </p>
+        <div class="anim-fiu d4" style="display:flex;flex-wrap:wrap;gap:16px;justify-content:center;">
+            <a href="#projects" class="btn-primary">Ver Proyectos</a>
+            <a href="#about" class="btn-outline">Conócenos</a>
+        </div>
+    </div>
+    <a href="#about" class="anim-fiu d7" style="position:absolute;bottom:40px;left:50%;transform:translateX(-50%);color:#57534e;text-decoration:none;transition:color .3s;" onmouseover="this.style.color='#a8a29e'" onmouseout="this.style.color='#57534e'">
+        <span class="iconify" data-icon="lucide:chevron-down" data-width="24" style="animation:float 2s ease-in-out infinite;display:inline-block;"></span>
+    </a>
+</section>
+
+<!-- ABOUT -->
+<section id="about" style="padding:96px 0 128px;position:relative;">
+    <div style="position:absolute;top:0;right:0;width:288px;height:288px;border-radius:50%;background:rgba(255,255,255,.02);filter:blur(100px);"></div>
+    <div style="max-width:1280px;margin:0 auto;padding:0 24px;">
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:center;" class="about-grid">
+            <div class="reveal">
+                <div style="position:relative;">
+                    <img id="about-img" src="https://picsum.photos/seed/arch-about-ct/800/600" alt="CT Arquitectos" style="width:100%;border-radius:16px;object-fit:cover;aspect-ratio:4/3;">
+                    <div class="glass hidden md:block" style="position:absolute;bottom:-24px;right:-24px;border-radius:12px;padding:20px;">
+                        <div style="font-size:30px;font-weight:600;" class="stat-num">15+</div>
+                        <div style="font-size:12px;color:#57534e;margin-top:4px;">Años de experiencia</div>
+                    </div>
+                </div>
+            </div>
+            <div class="reveal" style="transition-delay:.2s;">
+                <span style="font-size:12px;font-weight:500;color:#d4d4d4;letter-spacing:.1em;text-transform:uppercase;margin-bottom:16px;display:block;">Sobre Nosotros</span>
+                <h2 id="about-title" style="font-size:30px;font-weight:600;letter-spacing:-0.025em;margin-bottom:24px;">Donde la visión se convierte en arquitectura</h2>
+                <p id="about-text" style="color:#a8a29e;font-weight:300;line-height:1.7;margin-bottom:24px;">En CT Arquitectos, cada línea que trazamos tiene un propósito. Somos un estudio de arquitectura comprometido con la creación de espacios que trascienden lo ordinario. Nuestro enfoque integra diseño contemporáneo, sustentabilidad y una profunda comprensión de las necesidades de cada cliente.</p>
+                <p id="about-text2" style="color:#a8a29e;font-weight:300;line-height:1.7;margin-bottom:32px;">Desde residencias privadas hasta complejos comerciales, cada proyecto es una oportunidad para redefinir los límites del diseño arquitectónico. Trabajamos con dedicación para que cada espacio cuente una historia única.</p>
+                <div style="display:flex;gap:32px;">
+                    <div><div style="font-size:24px;font-weight:600;" class="stat-num">120+</div><div style="font-size:12px;color:#57534e;margin-top:4px;">Proyectos realizados</div></div>
+                    <div><div style="font-size:24px;font-weight:600;" class="stat-num">98%</div><div style="font-size:12px;color:#57534e;margin-top:4px;">Clientes satisfechos</div></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- PROJECTS -->
+<section id="projects" style="padding:96px 0 128px;position:relative;">
+    <div style="position:absolute;bottom:0;left:0;width:384px;height:384px;border-radius:50%;background:rgba(255,255,255,.015);filter:blur(120px);"></div>
+    <div style="max-width:1280px;margin:0 auto;padding:0 24px;">
+        <div class="reveal" style="text-align:center;margin-bottom:56px;">
+            <span style="font-size:12px;font-weight:500;color:#d4d4d4;letter-spacing:.1em;text-transform:uppercase;margin-bottom:16px;display:block;">Portafolio</span>
+            <h2 style="font-size:30px;font-weight:600;letter-spacing:-0.025em;margin-bottom:16px;">Proyectos Destacados</h2>
+            <p style="color:#57534e;font-weight:300;max-width:560px;margin:0 auto;">Una selección de nuestros trabajos más representativos, donde cada espacio refleja nuestra filosofía de diseño.</p>
+        </div>
+        <div class="reveal" id="filter-bar" style="display:flex;flex-wrap:wrap;justify-content:center;gap:12px;margin-bottom:48px;transition-delay:.1s;">
+            <button class="filter-btn active" data-filter="all" style="padding:8px 20px;border-radius:9999px;border:1px solid rgba(255,255,255,.1);background:rgba(255,255,255,.03);font-size:12px;font-weight:500;color:#a8a29e;cursor:pointer;">Todos</button>
+            <button class="filter-btn" data-filter="residencial" style="padding:8px 20px;border-radius:9999px;border:1px solid rgba(255,255,255,.1);background:rgba(255,255,255,.03);font-size:12px;font-weight:500;color:#a8a29e;cursor:pointer;">Residencial</button>
+            <button class="filter-btn" data-filter="comercial" style="padding:8px 20px;border-radius:9999px;border:1px solid rgba(255,255,255,.1);background:rgba(255,255,255,.03);font-size:12px;font-weight:500;color:#a8a29e;cursor:pointer;">Comercial</button>
+            <button class="filter-btn" data-filter="interiorismo" style="padding:8px 20px;border-radius:9999px;border:1px solid rgba(255,255,255,.1);background:rgba(255,255,255,.03);font-size:12px;font-weight:500;color:#a8a29e;cursor:pointer;">Interiorismo</button>
+        </div>
+        <div id="projects-grid" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:24px;"></div>
+    </div>
+</section>
+
+<!-- SERVICES -->
+<section id="services" style="padding:96px 0 128px;position:relative;">
+    <div style="position:absolute;top:50%;right:0;width:320px;height:320px;border-radius:50%;background:rgba(255,255,255,.015);filter:blur(120px);"></div>
+    <div style="max-width:1280px;margin:0 auto;padding:0 24px;">
+        <div class="reveal" style="text-align:center;margin-bottom:56px;">
+            <span style="font-size:12px;font-weight:500;color:#d4d4d4;letter-spacing:.1em;text-transform:uppercase;margin-bottom:16px;display:block;">Servicios</span>
+            <h2 style="font-size:30px;font-weight:600;letter-spacing:-0.025em;margin-bottom:16px;">Lo que hacemos</h2>
+            <p style="color:#57534e;font-weight:300;max-width:560px;margin:0 auto;">Ofrecemos soluciones arquitectónicas integrales, desde la concepción hasta la entrega final del proyecto.</p>
+        </div>
+        <div id="services-grid" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:24px;"></div>
+    </div>
+</section>
+
+<!-- STATS -->
+<section style="padding:80px 0;position:relative;overflow:hidden;">
+    <div style="position:absolute;inset:0;background:linear-gradient(to right,rgba(255,255,255,.02),rgba(255,255,255,.01));"></div>
+    <div style="position:absolute;inset:0;border-top:1px solid rgba(255,255,255,.05);border-bottom:1px solid rgba(255,255,255,.05);"></div>
+    <div style="max-width:1280px;margin:0 auto;padding:0 24px;position:relative;z-index:10;">
+        <div id="stats-grid" style="display:grid;grid-template-columns:repeat(4,1fr);gap:32px;"></div>
+    </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact" style="padding:96px 0 128px;position:relative;">
+    <div style="position:absolute;top:0;left:50%;transform:translateX(-50%);width:500px;height:500px;border-radius:50%;background:rgba(255,255,255,.015);filter:blur(150px);"></div>
+    <div style="max-width:1280px;margin:0 auto;padding:0 24px;">
+        <div class="reveal" style="text-align:center;margin-bottom:56px;">
+            <span style="font-size:12px;font-weight:500;color:#d4d4d4;letter-spacing:.1em;text-transform:uppercase;margin-bottom:16px;display:block;">Contacto</span>
+            <h2 style="font-size:30px;font-weight:600;letter-spacing:-0.025em;margin-bottom:16px;">Hablemos de tu proyecto</h2>
+            <p style="color:#57534e;font-weight:300;max-width:560px;margin:0 auto;">Estamos listos para escuchar tus ideas y convertirlas en realidad. Contáctanos y comencemos a crear juntos.</p>
+        </div>
+        <div style="display:grid;grid-template-columns:3fr 2fr;gap:48px;" class="contact-grid">
+            <div class="reveal">
+                <form id="contact-form" style="display:flex;flex-direction:column;gap:20px;">
+                    <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px;" class="sm-grid-2">
+                        <div>
+                            <label style="font-size:12px;color:#57534e;margin-bottom:8px;display:block;">Nombre completo</label>
+                            <input type="text" class="fi" placeholder="Tu nombre" required>
+                        </div>
+                        <div>
+                            <label style="font-size:12px;color:#57534e;margin-bottom:8px;display:block;">Correo electrónico</label>
+                            <input type="email" class="fi" placeholder="tu@correo.com" required>
+                        </div>
+                    </div>
+                    <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px;" class="sm-grid-2">
+                        <div>
+                            <label style="font-size:12px;color:#57534e;margin-bottom:8px;display:block;">Teléfono</label>
+                            <input type="tel" class="fi" placeholder="+52 (555) 000-0000">
+                        </div>
+                        <div>
+                            <label style="font-size:12px;color:#57534e;margin-bottom:8px;display:block;">Tipo de proyecto</label>
+                            <select class="fi" style="appearance:none;">
+                                <option value="" style="background:#171717;">Selecciona una opción</option>
+                                <option value="residencial" style="background:#171717;">Residencial</option>
+                                <option value="comercial" style="background:#171717;">Comercial</option>
+                                <option value="interiorismo" style="background:#171717;">Interiorismo</option>
+                                <option value="remodelacion" style="background:#171717;">Remodelación</option>
+                                <option value="otro" style="background:#171717;">Otro</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div>
+                        <label style="font-size:12px;color:#57534e;margin-bottom:8px;display:block;">Mensaje</label>
+                        <textarea class="fi" rows="5" placeholder="Cuéntanos sobre tu proyecto..." required></textarea>
+                    </div>
+                    <button type="submit" class="btn-primary" style="width:fit-content;">Enviar Mensaje</button>
+                </form>
+            </div>
+            <div class="reveal" style="transition-delay:.2s;">
+                <div style="display:flex;flex-direction:column;gap:24px;">
+                    <div class="glass" style="border-radius:12px;padding:24px;">
+                        <div style="display:flex;align-items:flex-start;gap:16px;">
+                            <div style="width:40px;height:40px;border-radius:8px;background:rgba(255,255,255,.06);display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+                                <span class="iconify" data-icon="lucide:map-pin" data-width="18" style="color:#d4d4d4;"></span>
+                            </div>
+                            <div>
+                                <div style="font-size:14px;font-weight:500;margin-bottom:4px;">Dirección</div>
+                                <div id="contact-address" style="font-size:14px;color:#57534e;font-weight:300;">Av. Reforma 250, Col. Juárez, CDMX, México</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="glass" style="border-radius:12px;padding:24px;">
+                        <div style="display:flex;align-items:flex-start;gap:16px;">
+                            <div style="width:40px;height:40px;border-radius:8px;background:rgba(255,255,255,.06);display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+                                <span class="iconify" data-icon="lucide:phone" data-width="18" style="color:#d4d4d4;"></span>
+                            </div>
+                            <div>
+                                <div style="font-size:14px;font-weight:500;margin-bottom:4px;">Teléfono</div>
+                                <div id="contact-phone" style="font-size:14px;color:#57534e;font-weight:300;">+52 (55) 1234-5678</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="glass" style="border-radius:12px;padding:24px;">
+                        <div style="display:flex;align-items:flex-start;gap:16px;">
+                            <div style="width:40px;height:40px;border-radius:8px;background:rgba(255,255,255,.06);display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+                                <span class="iconify" data-icon="lucide:mail" data-width="18" style="color:#d4d4d4;"></span>
+                            </div>
+                            <div>
+                                <div style="font-size:14px;font-weight:500;margin-bottom:4px;">Correo</div>
+                                <div id="contact-email" style="font-size:14px;color:#57534e;font-weight:300;">info@ctarquitectos.com</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="glass" style="border-radius:12px;padding:24px;">
+                        <div style="display:flex;align-items:flex-start;gap:16px;">
+                            <div style="width:40px;height:40px;border-radius:8px;background:rgba(255,255,255,.06);display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+                                <span class="iconify" data-icon="lucide:clock" data-width="18" style="color:#d4d4d4;"></span>
+                            </div>
+                            <div>
+                                <div style="font-size:14px;font-weight:500;margin-bottom:4px;">Horario</div>
+                                <div id="contact-hours" style="font-size:14px;color:#57534e;font-weight:300;">Lun - Vie: 9:00 - 18:00<br>Sáb: 10:00 - 14:00</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- FOOTER -->
+<footer style="border-top:1px solid rgba(255,255,255,.05);padding:64px 0;">
+    <div style="max-width:1280px;margin:0 auto;padding:0 24px;">
+        <div style="display:grid;grid-template-columns:2fr 1fr 1fr;gap:48px;margin-bottom:48px;" class="footer-grid">
+            <div>
+                <div style="display:flex;align-items:center;gap:10px;margin-bottom:16px;">
+                    <div style="width:36px;height:36px;border-radius:8px;background:#fff;display:flex;align-items:center;justify-content:center;color:#050505;font-weight:700;font-size:13px;letter-spacing:-0.02em;">CT</div>
+                    <span style="color:#fff;font-weight:600;font-size:18px;letter-spacing:-0.025em;">Arquitectos</span>
+                </div>
+                <p style="color:#57534e;font-weight:300;font-size:14px;line-height:1.7;max-width:380px;margin-bottom:24px;">Diseñamos espacios que trascienden lo ordinario. Cada proyecto es una expresión única de innovación y compromiso con la excelencia.</p>
+                <div style="display:flex;gap:12px;">
+                    <a href="#" style="width:36px;height:36px;border-radius:50%;border:1px solid rgba(255,255,255,.1);display:flex;align-items:center;justify-content:center;color:#57534e;text-decoration:none;transition:all .3s;" onmouseover="this.style.color='#fff';this.style.borderColor='rgba(255,255,255,.3)'" onmouseout="this.style.color='#57534e';this.style.borderColor='rgba(255,255,255,.1)'"><span class="iconify" data-icon="lucide:instagram" data-width="16"></span></a>
+                    <a href="#" style="width:36px;height:36px;border-radius:50%;border:1px solid rgba(255,255,255,.1);display:flex;align-items:center;justify-content:center;color:#57534e;text-decoration:none;transition:all .3s;" onmouseover="this.style.color='#fff';this.style.borderColor='rgba(255,255,255,.3)'" onmouseout="this.style.color='#57534e';this.style.borderColor='rgba(255,255,255,.1)'"><span class="iconify" data-icon="lucide:facebook" data-width="16"></span></a>
+                    <a href="#" style="width:36px;height:36px;border-radius:50%;border:1px solid rgba(255,255,255,.1);display:flex;align-items:center;justify-content:center;color:#57534e;text-decoration:none;transition:all .3s;" onmouseover="this.style.color='#fff';this.style.borderColor='rgba(255,255,255,.3)'" onmouseout="this.style.color='#57534e';this.style.borderColor='rgba(255,255,255,.1)'"><span class="iconify" data-icon="lucide:linkedin" data-width="16"></span></a>
+                </div>
+            </div>
+            <div>
+                <h4 style="font-size:14px;font-weight:500;margin-bottom:16px;">Navegación</h4>
+                <div style="display:flex;flex-direction:column;gap:8px;">
+                    <a href="#hero" style="font-size:14px;color:#57534e;font-weight:300;text-decoration:none;transition:color .3s;" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='#57534e'">Inicio</a>
+                    <a href="#about" style="font-size:14px;color:#57534e;font-weight:300;text-decoration:none;transition:color .3s;" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='#57534e'">Nosotros</a>
+                    <a href="#projects" style="font-size:14px;color:#57534e;font-weight:300;text-decoration:none;transition:color .3s;" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='#57534e'">Proyectos</a>
+                    <a href="#services" style="font-size:14px;color:#57534e;font-weight:300;text-decoration:none;transition:color .3s;" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='#57534e'">Servicios</a>
+                    <a href="#contact" style="font-size:14px;color:#57534e;font-weight:300;text-decoration:none;transition:color .3s;" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='#57534e'">Contacto</a>
+                </div>
+            </div>
+            <div>
+                <h4 style="font-size:14px;font-weight:500;margin-bottom:16px;">Servicios</h4>
+                <div style="display:flex;flex-direction:column;gap:8px;">
+                    <span style="font-size:14px;color:#57534e;font-weight:300;">Diseño Arquitectónico</span>
+                    <span style="font-size:14px;color:#57534e;font-weight:300;">Interiorismo</span>
+                    <span style="font-size:14px;color:#57534e;font-weight:300;">Remodelación</span>
+                    <span style="font-size:14px;color:#57534e;font-weight:300;">Planificación Urbana</span>
+                    <span style="font-size:14px;color:#57534e;font-weight:300;">Consultoría</span>
+                </div>
+            </div>
+        </div>
+        <div style="border-top:1px solid rgba(255,255,255,.05);padding-top:32px;display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:16px;">
+            <p style="font-size:12px;color:#44403c;">&copy; 2024 CT Arquitectos. Todos los derechos reservados.</p>
+            <button onclick="openAdmin()" style="font-size:12px;color:#44403c;background:none;border:none;cursor:pointer;display:flex;align-items:center;gap:6px;transition:color .3s;padding:4px 8px;" onmouseover="this.style.color='#78716c'" onmouseout="this.style.color='#44403c'" title="Panel de Administración">
+                <span class="iconify" data-icon="lucide:settings" data-width="12"></span> Admin
+            </button>
+        </div>
+    </div>
+</footer>
+
+<!-- ========== ADMIN PANEL ========== -->
+<div id="admin-overlay" style="position:fixed;inset:0;z-index:90000;display:none;">
+
+    <!-- LOGIN -->
+    <div id="admin-login" style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;background:rgba(0,0,0,.75);backdrop-filter:blur(8px);">
+        <div class="anim-si" style="background:#171717;border:1px solid #262626;border-radius:16px;padding:40px;max-width:380px;width:100%;margin:0 16px;position:relative;">
+            <button onclick="closeAdmin()" style="position:absolute;top:16px;right:16px;color:#57534e;background:none;border:none;cursor:pointer;transition:color .3s;padding:4px;" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='#57534e'">
+                <span class="iconify" data-icon="lucide:x" data-width="18"></span>
+            </button>
+            <div style="display:flex;align-items:center;gap:10px;margin-bottom:32px;">
+                <div style="width:32px;height:32px;border-radius:6px;background:#fff;display:flex;align-items:center;justify-content:center;color:#050505;font-weight:700;font-size:11px;letter-spacing:-0.02em;">CT</div>
+                <span style="color:#fff;font-weight:600;font-size:15px;">Panel Admin</span>
+            </div>
+            <div id="login-error" style="display:none;margin-bottom:16px;padding:12px;border-radius:8px;background:rgba(239,68,68,.1);border:1px solid rgba(239,68,68,.2);color:#f87171;font-size:12px;"></div>
+            <div style="display:flex;flex-direction:column;gap:16px;">
+                <div>
+                    <label style="font-size:12px;color:#57534e;margin-bottom:8px;display:block;">Usuario</label>
+                    <input id="login-user" type="text" class="fi" placeholder="Usuario" autocomplete="off">
+                </div>
+                <div>
+                    <label style="font-size:12px;color:#57534e;margin-bottom:8px;display:block;">Contraseña</label>
+                    <input id="login-pass" type="password" class="fi" placeholder="••••••••">
+                </div>
+                <button onclick="doLogin()" class="btn-primary-sm" style="width:100%;padding:12px;border-radius:8px;font-size:14px;">Iniciar Sesión</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- DASHBOARD -->
+    <div id="admin-dashboard" style="position:absolute;inset:0;display:none;background:#0a0a0a;">
+        <div style="display:flex;height:100%;">
+            <!-- Sidebar -->
+            <div style="width:224px;background:#050505;border-right:1px solid rgba(255,255,255,.05);display:flex;flex-direction:column;flex-shrink:0;">
+                <div style="padding:20px;border-bottom:1px solid rgba(255,255,255,.05);">
+                    <div style="display:flex;align-items:center;gap:8px;">
+                        <div style="width:28px;height:28px;border-radius:6px;background:#fff;display:flex;align-items:center;justify-content:center;color:#050505;font-weight:700;font-size:10px;letter-spacing:-0.02em;">CT</div>
+                        <span style="font-size:14px;font-weight:500;">Admin Panel</span>
+                    </div>
+                </div>
+                <nav style="flex:1;padding:16px 8px;display:flex;flex-direction:column;gap:4px;">
+                    <button onclick="showAdminTab('tab-hero')" class="admin-sl active" data-tab="tab-hero" style="width:100%;text-align:left;padding:10px 16px;border-radius:8px;font-size:14px;color:#a8a29e;font-weight:300;display:flex;align-items:center;gap:12px;border:none;background:none;cursor:pointer;">
+                        <span class="iconify" data-icon="lucide:image" data-width="16"></span> Inicio
+                    </button>
+                    <button onclick="showAdminTab('tab-about')" class="admin-sl" data-tab="tab-about" style="width:100%;text-align:left;padding:10px 16px;border-radius:8px;font-size:14px;color:#a8a29e;font-weight:300;display:flex;align-items:center;gap:12px;border:none;background:none;cursor:pointer;">
+                        <span class="iconify" data-icon="lucide:user" data-width="16"></span> Nosotros
+                    </button>
+                    <button onclick="showAdminTab('tab-projects')" class="admin-sl" data-tab="tab-projects" style="width:100%;text-align:left;padding:10px 16px;border-radius:8px;font-size:14px;color:#a8a29e;font-weight:300;display:flex;align-items:center;gap:12px;border:none;background:none;cursor:pointer;">
+                        <span class="iconify" data-icon="lucide:layout-grid" data-width="16"></span> Proyectos
+                    </button>
+                    <button onclick="showAdminTab('tab-services')" class="admin-sl" data-tab="tab-services" style="width:100%;text-align:left;padding:10px 16px;border-radius:8px;font-size:14px;color:#a8a29e;font-weight:300;display:flex;align-items:center;gap:12px;border:none;background:none;cursor:pointer;">
+                        <span class="iconify" data-icon="lucide:wrench" data-width="16"></span> Servicios
+                    </button>
+                    <button onclick="showAdminTab('tab-stats')" class="admin-sl" data-tab="tab-stats" style="width:100%;text-align:left;padding:10px 16px;border-radius:8px;font-size:14px;color:#a8a29e;font-weight:300;display:flex;align-items:center;gap:12px;border:none;background:none;cursor:pointer;">
+                        <span class="iconify" data-icon="lucide:bar-chart-3" data-width="16"></span> Estadísticas
+                    </button>
+                    <button onclick="showAdminTab('tab-contact')" class="admin-sl" data-tab="tab-contact" style="width:100%;text-align:left;padding:10px 16px;border-radius:8px;font-size:14px;color:#a8a29e;font-weight:300;display:flex;align-items:center;gap:12px;border:none;background:none;cursor:pointer;">
+                        <span class="iconify" data-icon="lucide:mail" data-width="16"></span> Contacto
+                    </button>
+                </nav>
+                <div style="padding:16px;border-top:1px solid rgba(255,255,255,.05);display:flex;flex-direction:column;gap:4px;">
+                    <button onclick="closeAdmin()" style="width:100%;text-align:left;padding:8px 16px;border-radius:8px;font-size:14px;color:#57534e;border:none;background:none;cursor:pointer;display:flex;align-items:center;gap:12px;transition:all .3s;" onmouseover="this.style.color='#fff';this.style.background='rgba(255,255,255,.05)'" onmouseout="this.style.color='#57534e';this.style.background='none'">
+                        <span class="iconify" data-icon="lucide:external-link" data-width="16"></span> Ver Sitio
+                    </button>
+                    <button onclick="doLogout()" style="width:100%;text-align:left;padding:8px 16px;border-radius:8px;font-size:14px;color:rgba(248,113,113,.7);border:none;background:none;cursor:pointer;display:flex;align-items:center;gap:12px;transition:all .3s;" onmouseover="this.style.color='#f87171';this.style.background='rgba(239,68,68,.05)'" onmouseout="this.style.color='rgba(248,113,113,.7)';this.style.background='none'">
+                        <span class="iconify" data-icon="lucide:log-out" data-width="16"></span> Cerrar Sesión
+                    </button>
+                </div>
+            </div>
+
+            <!-- Content -->
+            <div class="admin-scroll" style="flex:1;background:#171717;overflow-y:auto;">
+                <div style="max-width:720px;margin:0 auto;padding:32px;">
+
+                    <div id="tab-hero" class="admin-tab">
+                        <h3 style="font-size:20px;font-weight:600;margin-bottom:24px;">Sección de Inicio (Hero)</h3>
+                        <div style="display:flex;flex-direction:column;gap:20px;">
+                            <div><label style="font-size:12px;color:#57534e;margin-bottom:8px;display:block;">Título Principal</label><textarea id="adm-hero-title" class="fi" rows="3"></textarea></div>
+                            <div><label style="font-size:12px;color:#57534e;margin-bottom:8px;display:block;">Subtítulo</label><textarea id="adm-hero-subtitle" class="fi" rows="3"></textarea></div>
+                            <div><label style="font-size:12px;color:#57534e;margin-bottom:8px;display:block;">URL de Imagen de Fondo</label><input id="adm-hero-img" type="url" class="fi" placeholder="https://..."><p style="font-size:12px;color:#44403c;margin-top:6px;">Pega aquí el enlace de la imagen que desees usar</p></div>
+                            <button onclick="saveHero()" class="btn-primary-sm" style="width:fit-content;">Guardar Cambios</button>
+                        </div>
+                    </div>
+
+                    <div id="tab-about" class="admin-tab" style="display:none;">
+                        <h3 style="font-size:20px;font-weight:600;margin-bottom:24px;">Sección Nosotros</h3>
+                        <div style="display:flex;flex-direction:column;gap:20px;">
+                            <div><label style="font-size:12px;color:#57534e;margin-bottom:8px;display:block;">Título</label><input id="adm-about-title" type="text" class="fi"></div>
+                            <div><label style="font-size:12px;color:#57534e;margin-bottom:8px;display:block;">Párrafo 1</label><textarea id="adm-about-text" class="fi" rows="4"></textarea></div>
+                            <div><label style="font-size:12px;color:#57534e;margin-bottom:8px;display:block;">Párrafo 2</label><textarea id="adm-about-text2" class="fi" rows="4"></textarea></div>
+                            <div><label style="font-size:12px;color:#57534e;margin-bottom:8px;display:block;">URL de Imagen</label><input id="adm-about-img" type="url" class="fi" placeholder="https://..."></div>
+                            <button onclick="saveAbout()" class="btn-primary-sm" style="width:fit-content;">Guardar Cambios</button>
+                        </div>
+                    </div>
+
+                    <div id="tab-projects" class="admin-tab" style="display:none;">
+                        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:24px;">
+                            <h3 style="font-size:20px;font-weight:600;">Proyectos</h3>
+                            <button onclick="openProjectForm()" style="padding:8px 16px;background:rgba(255,255,255,.08);color:#d4d4d4;border-radius:8px;font-size:12px;font-weight:500;border:1px solid rgba(255,255,255,.1);cursor:pointer;display:flex;align-items:center;gap:8px;transition:all .3s;" onmouseover="this.style.background='rgba(255,255,255,.12)'" onmouseout="this.style.background='rgba(255,255,255,.08)'">
+                                <span class="iconify" data-icon="lucide:plus" data-width="14"></span> Agregar
+                            </button>
+                        </div>
+                        <div id="project-form" style="display:none;margin-bottom:32px;padding:24px;border-radius:12px;border:1px solid #262626;background:#0a0a0a;">
+                            <div style="display:flex;flex-direction:column;gap:16px;">
+                                <h4 id="project-form-title" style="font-size:14px;font-weight:500;">Nuevo Proyecto</h4>
+                                <input type="hidden" id="adm-proj-id" value="">
+                                <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;">
+                                    <div><label style="font-size:12px;color:#57534e;margin-bottom:6px;display:block;">Título</label><input id="adm-proj-title" class="fi" placeholder="Nombre del proyecto"></div>
+                                    <div><label style="font-size:12px;color:#57534e;margin-bottom:6px;display:block;">Categoría</label>
+                                        <select id="adm-proj-cat" class="fi" style="appearance:none;">
+                                            <option value="residencial">Residencial</option>
+                                            <option value="comercial">Comercial</option>
+                                            <option value="interiorismo">Interiorismo</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div><label style="font-size:12px;color:#57534e;margin-bottom:6px;display:block;">Descripción</label><textarea id="adm-proj-desc" class="fi" rows="3" placeholder="Breve descripción..."></textarea></div>
+                                <div><label style="font-size:12px;color:#57534e;margin-bottom:6px;display:block;">URL de Imagen</label><input id="adm-proj-img" class="fi" placeholder="https://..."></div>
+                                <div style="display:flex;gap:12px;">
+                                    <button onclick="saveProject()" class="btn-primary-sm">Guardar</button>
+                                    <button onclick="closeProjectForm()" style="padding:10px 20px;border:1px solid rgba(255,255,255,.1);border-radius:8px;font-size:12px;color:#a8a29e;background:none;cursor:pointer;transition:color .3s;" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='#a8a29e'">Cancelar</button>
+                                </div>
+                            </div>
+                        </div>
+                        <div id="admin-projects-list" style="display:flex;flex-direction:column;gap:12px;"></div>
+                    </div>
+
+                    <div id="tab-services" class="admin-tab" style="display:none;">
+                        <h3 style="font-size:20px;font-weight:600;margin-bottom:24px;">Servicios</h3>
+                        <div id="admin-services-list" style="display:flex;flex-direction:column;gap:16px;"></div>
+                        <button onclick="saveServices()" class="btn-primary-sm" style="margin-top:24px;width:fit-content;">Guardar Cambios</button>
+                    </div>
+
+                    <div id="tab-stats" class="admin-tab" style="display:none;">
+                        <h3 style="font-size:20px;font-weight:600;margin-bottom:24px;">Estadísticas</h3>
+                        <div id="admin-stats-list" style="display:flex;flex-direction:column;gap:16px;"></div>
+                        <button onclick="saveStats()" class="btn-primary-sm" style="margin-top:24px;width:fit-content;">Guardar Cambios</button>
+                    </div>
+
+                    <div id="tab-contact" class="admin-tab" style="display:none;">
+                        <h3 style="font-size:20px;font-weight:600;margin-bottom:24px;">Información de Contacto</h3>
+                        <div style="display:flex;flex-direction:column;gap:20px;">
+                            <div><label style="font-size:12px;color:#57534e;margin-bottom:8px;display:block;">Dirección</label><input id="adm-contact-address" class="fi"></div>
+                            <div><label style="font-size:12px;color:#57534e;margin-bottom:8px;display:block;">Teléfono</label><input id="adm-contact-phone" class="fi"></div>
+                            <div><label style="font-size:12px;color:#57534e;margin-bottom:8px;display:block;">Correo Electrónico</label><input id="adm-contact-email" class="fi"></div>
+                            <div><label style="font-size:12px;color:#57534e;margin-bottom:8px;display:block;">Horario</label><textarea id="adm-contact-hours" class="fi" rows="2"></textarea></div>
+                            <button onclick="saveContact()" class="btn-primary-sm" style="width:fit-content;">Guardar Cambios</button>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- RESPONSIVE -->
+<style>
+    @media(max-width:1024px){
+        .footer-grid{grid-template-columns:1fr 1fr !important;}
+        .contact-grid{grid-template-columns:1fr !important;}
+    }
+    @media(max-width:768px){
+        .footer-grid{grid-template-columns:1fr !important;}
+        .sm-grid-2{grid-template-columns:1fr !important;}
+        #stats-grid{grid-template-columns:1fr 1fr !important;}
+        .about-grid{grid-template-columns:1fr !important;}
+    }
+</style>
+
+<!-- JAVASCRIPT -->
+<script>
+var DEFAULTS = {
+    hero: {
+        title: 'Arquitectura con\nalma y propósito',
+        subtitle: 'Transformamos visiones en espacios extraordinarios. Cada proyecto refleja nuestra pasión por el diseño, la funcionalidad y la excelencia arquitectónica.',
+        image: 'https://picsum.photos/seed/arch-hero-ct/1920/1080'
+    },
+    about: {
+        title: 'Donde la visión se convierte en arquitectura',
+        text: 'En CT Arquitectos, cada línea que trazamos tiene un propósito. Somos un estudio de arquitectura comprometido con la creación de espacios que trascienden lo ordinario. Nuestro enfoque integra diseño contemporáneo, sustentabilidad y una profunda comprensión de las necesidades de cada cliente.',
+        text2: 'Desde residencias privadas hasta complejos comerciales, cada proyecto es una oportunidad para redefinir los límites del diseño arquitectónico. Trabajamos con dedicación para que cada espacio cuente una historia única.',
+        image: 'https://picsum.photos/seed/arch-about-ct/800/600'
+    },
+    projects: [
+        { id: 1, title: 'Casa Miravalles', category: 'residencial', description: 'Residencia contemporánea que integra la naturaleza con espacios de convivencia fluidos y luminosos.', image: 'https://picsum.photos/seed/casa-mira-ct/600/800' },
+        { id: 2, title: 'Torre Polanco', category: 'comercial', description: 'Edificio corporativo de 20 pisos con certificación LEED y diseño biofílico en cada nivel.', image: 'https://picsum.photos/seed/torre-pol-ct/600/800' },
+        { id: 3, title: 'Loft Roma Norte', category: 'interiorismo', description: 'Reinterpretación de un espacio industrial en un loft moderno con materiales reciclados y arte integrado.', image: 'https://picsum.photos/seed/loft-roma-ct/600/800' },
+        { id: 4, title: 'Villa del Mar', category: 'residencial', description: 'Residencia de lujo frente al mar con piscina infinita y terrazas panorámicas.', image: 'https://picsum.photos/seed/villa-mar-ct/600/800' },
+        { id: 5, title: 'Centro Empresarial Altavista', category: 'comercial', description: 'Complejo de oficinas con áreas verdes compartidas, auditorio y restaurante gourmet.', image: 'https://picsum.photos/seed/centro-emp-ct/600/800' },
+        { id: 6, title: 'Restaurante Silvestre', category: 'interiorismo', description: 'Diseño de interior para restaurante de alta cocina con jardín interior y iluminación escultórica.', image: 'https://picsum.photos/seed/rest-silv-ct/600/800' }
+    ],
+    services: [
+        { id: 1, icon: 'lucide:compass', title: 'Diseño Arquitectónico', description: 'Concepción y desarrollo de proyectos arquitectónicos desde la idea inicial hasta los planos de ejecución, con un enfoque innovador y personalizado.' },
+        { id: 2, icon: 'lucide:sofa', title: 'Interiorismo', description: 'Diseño de interiores que reflejan la personalidad de cada cliente. Selección de materiales, mobiliario, iluminación y arte para crear ambientes únicos.' },
+        { id: 3, icon: 'lucide:hammer', title: 'Remodelación', description: 'Transformación integral de espacios existentes, optimizando la distribución, funcionalidad y estética sin perder la esencia original.' },
+        { id: 4, icon: 'lucide:building-2', title: 'Planificación Urbana', description: 'Desarrollo de planes maestros y proyectos urbanísticos que consideran la movilidad, sustentabilidad y calidad de vida de las comunidades.' },
+        { id: 5, icon: 'lucide:leaf', title: 'Arquitectura Sustentable', description: 'Proyectos diseñados bajo principios de sustentabilidad, eficiencia energética y respeto por el medio ambiente, sin comprometer el diseño.' },
+        { id: 6, icon: 'lucide:message-circle', title: 'Consultoría', description: 'Asesoría profesional en proyectos arquitectónicos, evaluación de factibilidad, normativas y dirección de obra especializada.' }
+    ],
+    stats: [
+        { number: '120+', label: 'Proyectos Completados' },
+        { number: '15+', label: 'Años de Experiencia' },
+        { number: '98%', label: 'Clientes Satisfechos' },
+        { number: '35+', label: 'Premios Obtenidos' }
+    ],
+    contact: {
+        address: 'Av. Reforma 250, Col. Juárez, CDMX, México',
+        phone: '+52 (55) 1234-5678',
+        email: 'info@ctarquitectos.com',
+        hours: 'Lun - Vie: 9:00 - 18:00\nSáb: 10:00 - 14:00'
+    }
+};
+
+var siteData = {};
+var currentFilter = 'all';
+var adminLoggedIn = false;
+var savedScrollY = 0;
+
+function loadData() {
+    try {
+        var saved = localStorage.getItem('ct-arquitectos-data');
+        if (saved) {
+            siteData = JSON.parse(saved);
+            if (!siteData.hero) siteData.hero = JSON.parse(JSON.stringify(DEFAULTS.hero));
+            if (!siteData.about) siteData.about = JSON.parse(JSON.stringify(DEFAULTS.about));
+            if (!siteData.projects) siteData.projects = JSON.parse(JSON.stringify(DEFAULTS.projects));
+            if (!siteData.services) siteData.services = JSON.parse(JSON.stringify(DEFAULTS.services));
+            if (!siteData.stats) siteData.stats = JSON.parse(JSON.stringify(DEFAULTS.stats));
+            if (!siteData.contact) siteData.contact = JSON.parse(JSON.stringify(DEFAULTS.contact));
+        } else {
+            siteData = JSON.parse(JSON.stringify(DEFAULTS));
+        }
+    } catch(e) {
+        siteData = JSON.parse(JSON.stringify(DEFAULTS));
+    }
+}
+
+function saveData() {
+    try { localStorage.setItem('ct-arquitectos-data', JSON.stringify(siteData)); } catch(e) {}
+}
+
+function renderSite() {
+    var heroTitle = document.getElementById('hero-title');
+    var titleText = siteData.hero.title;
+    var parts = titleText.split('\n');
+    if (parts.length > 1) {
+        heroTitle.innerHTML = parts[0] + '<br><span class="gradient-text">' + parts.slice(1).join('<br>') + '</span>';
+    } else {
+        heroTitle.innerHTML = titleText;
+    }
+    document.getElementById('hero-subtitle').textContent = siteData.hero.subtitle;
+    document.getElementById('hero-img').src = siteData.hero.image;
+    document.getElementById('about-title').textContent = siteData.about.title;
+    document.getElementById('about-text').textContent = siteData.about.text;
+    document.getElementById('about-text2').textContent = siteData.about.text2;
+    document.getElementById('about-img').src = siteData.about.image;
+    renderProjects();
+    renderServices();
+    renderStats();
+    document.getElementById('contact-address').textContent = siteData.contact.address;
+    document.getElementById('contact-phone').textContent = siteData.contact.phone;
+    document.getElementById('contact-email').textContent = siteData.contact.email;
+    document.getElementById('contact-hours').innerHTML = siteData.contact.hours.replace(/\n/g, '<br>');
+}
+
+function renderProjects() {
+    var grid = document.getElementById('projects-grid');
+    var filtered = currentFilter === 'all' ? siteData.projects : siteData.projects.filter(function(p) { return p.category === currentFilter; });
+    var html = '';
+    for (var i = 0; i < filtered.length; i++) {
+        var p = filtered[i];
+        html += '<div class="project-card reveal visible" style="border-radius:12px;overflow:hidden;position:relative;cursor:pointer;">' +
+            '<img src="' + p.image + '" alt="' + p.title + '" style="width:100%;aspect-ratio:3/4;object-fit:cover;transition:transform .7s,filter .7s;" onerror="this.src=\'https://picsum.photos/seed/fallback-' + p.id + '/600/800\'">' +
+            '<div class="overlay" style="position:absolute;inset:0;display:flex;flex-direction:column;justify-content:flex-end;padding:24px;background:linear-gradient(to top,rgba(0,0,0,.8),rgba(0,0,0,.2),transparent);opacity:0;transition:opacity .5s;">' +
+            '<span style="font-size:10px;font-weight:500;color:#d4d4d4;text-transform:uppercase;letter-spacing:.1em;margin-bottom:8px;">' + p.category + '</span>' +
+            '<h3 style="font-size:18px;font-weight:600;margin-bottom:4px;">' + p.title + '</h3>' +
+            '<p style="color:#a8a29e;font-size:12px;font-weight:300;line-height:1.6;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;">' + p.description + '</p>' +
+            '</div></div>';
+    }
+    grid.innerHTML = html;
+    var cards = grid.querySelectorAll('.project-card');
+    for (var j = 0; j < cards.length; j++) {
+        (function(card) {
+            var img = card.querySelector('img');
+            var ov = card.querySelector('.overlay');
+            card.addEventListener('mouseenter', function() { img.style.transform = 'scale(1.08)'; img.style.filter = 'brightness(.55)'; ov.style.opacity = '1'; });
+            card.addEventListener('mouseleave', function() { img.style.transform = 'scale(1)'; img.style.filter = 'brightness(1)'; ov.style.opacity = '0'; });
+        })(cards[j]);
+    }
+}
+
+function renderServices() {
+    var grid = document.getElementById('services-grid');
+    var html = '';
+    for (var i = 0; i < siteData.services.length; i++) {
+        var s = siteData.services[i];
+        html += '<div class="service-card reveal visible" style="padding:32px;border-radius:12px;border:1px solid #262626;background:rgba(23,23,23,.5);">' +
+            '<div style="width:48px;height:48px;border-radius:12px;background:rgba(255,255,255,.06);display:flex;align-items:center;justify-content:center;margin-bottom:20px;">' +
+            '<span class="iconify" data-icon="' + s.icon + '" data-width="22" style="color:#d4d4d4;"></span></div>' +
+            '<h3 style="font-size:16px;font-weight:500;margin-bottom:12px;">' + s.title + '</h3>' +
+            '<p style="color:#57534e;font-weight:300;font-size:14px;line-height:1.7;">' + s.description + '</p></div>';
+    }
+    grid.innerHTML = html;
+}
+
+function renderStats() {
+    var grid = document.getElementById('stats-grid');
+    var html = '';
+    for (var i = 0; i < siteData.stats.length; i++) {
+        var s = siteData.stats[i];
+        html += '<div class="reveal visible" style="text-align:center;">' +
+            '<div style="font-size:48px;font-weight:600;margin-bottom:8px;" class="stat-num">' + s.number + '</div>' +
+            '<div style="font-size:12px;color:#57534e;font-weight:300;">' + s.label + '</div></div>';
+    }
+    grid.innerHTML = html;
+}
+
+function toggleMobile() {
+    var m = document.getElementById('mobile-menu');
+    m.style.display = m.style.display === 'none' ? 'block' : 'none';
+}
+function closeMobile() { document.getElementById('mobile-menu').style.display = 'none'; }
+
+window.addEventListener('scroll', function() {
+    var nav = document.getElementById('navbar');
+    if (window.scrollY > 80) {
+        nav.style.background = 'rgba(10,10,10,.75)';
+        nav.style.backdropFilter = 'blur(12px)';
+        nav.style.borderBottom = '1px solid rgba(255,255,255,.05)';
+    } else {
+        nav.style.background = 'none';
+        nav.style.backdropFilter = 'none';
+        nav.style.borderBottom = 'none';
+    }
+    var sections = ['hero', 'about', 'projects', 'services', 'contact'];
+    var current = 'hero';
+    for (var i = 0; i < sections.length; i++) {
+        var el = document.getElementById(sections[i]);
+        if (el && window.scrollY >= el.offsetTop - 200) current = sections[i];
+    }
+    var links = document.querySelectorAll('.nav-link');
+    for (var j = 0; j < links.length; j++) {
+        links[j].classList.toggle('active', links[j].getAttribute('data-section') === current);
+    }
+});
+
+var revealObserver = new IntersectionObserver(function(entries) {
+    for (var i = 0; i < entries.length; i++) {
+        if (entries[i].isIntersecting) entries[i].target.classList.add('visible');
+    }
+}, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
+
+function observeReveals() {
+    var els = document.querySelectorAll('.reveal');
+    for (var i = 0; i < els.length; i++) revealObserver.observe(els[i]);
+}
+
+document.getElementById('filter-bar').addEventListener('click', function(e) {
+    var btn = e.target.closest('.filter-btn');
+    if (!btn) return;
+    var btns = document.querySelectorAll('.filter-btn');
+    for (var i = 0; i < btns.length; i++) btns[i].classList.remove('active');
+    btn.classList.add('active');
+    currentFilter = btn.getAttribute('data-filter');
+    renderProjects();
+});
+
+document.getElementById('contact-form').addEventListener('submit', function(e) {
+    e.preventDefault();
+    document.getElementById('thank-modal').style.display = 'flex';
+    e.target.reset();
+    setTimeout(function() { closeThankModal(); }, 10000);
+});
+
+function closeThankModal() { document.getElementById('thank-modal').style.display = 'none'; }
+
+function showToast(msg, type) {
+    type = type || 'success';
+    var box = document.getElementById('toast-box');
+    var t = document.createElement('div');
+    var bg = type === 'success' ? 'rgba(255,255,255,.08)' : 'rgba(239,68,68,.1)';
+    var border = type === 'success' ? 'rgba(255,255,255,.15)' : 'rgba(239,68,68,.3)';
+    var color = type === 'success' ? '#d4d4d4' : '#f87171';
+    var icon = type === 'success' ? 'lucide:check-circle' : 'lucide:alert-circle';
+    t.className = 'toast';
+    t.style.cssText = 'display:flex;align-items:center;gap:12px;padding:14px 20px;border-radius:12px;border:1px solid ' + border + ';background:' + bg + ';backdrop-filter:blur(12px);';
+    t.innerHTML = '<span class="iconify" data-icon="' + icon + '" data-width="18" style="color:' + color + ';"></span><span style="font-size:14px;color:' + color + ';font-weight:300;">' + msg + '</span>';
+    box.appendChild(t);
+    setTimeout(function() {
+        t.classList.add('out');
+        setTimeout(function() { if (t.parentNode) t.parentNode.removeChild(t); }, 300);
+    }, 3500);
+}
+
+function openAdmin() {
+    savedScrollY = window.scrollY || window.pageYOffset;
+    document.getElementById('admin-overlay').style.display = 'block';
+    if (adminLoggedIn) {
+        document.getElementById('admin-login').style.display = 'none';
+        document.getElementById('admin-dashboard').style.display = 'block';
+        populateAdminForms();
+    } else {
+        document.getElementById('admin-login').style.display = 'flex';
+        document.getElementById('admin-dashboard').style.display = 'none';
+    }
+    document.body.style.overflow = 'hidden';
+}
+
+function closeAdmin() {
+    document.getElementById('admin-overlay').style.display = 'none';
+    document.getElementById('admin-login').style.display = 'none';
+    document.getElementById('admin-dashboard').style.display = 'none';
+    document.body.style.overflow = '';
+    window.scrollTo(0, savedScrollY);
+}
+
+function doLogin() {
+    var user = document.getElementById('login-user').value.trim();
+    var pass = document.getElementById('login-pass').value;
+    var err = document.getElementById('login-error');
+    if (user === 'admin' && pass === 'ct2024') {
+        adminLoggedIn = true;
+        err.style.display = 'none';
+        document.getElementById('admin-login').style.display = 'none';
+        document.getElementById('admin-dashboard').style.display = 'block';
+        populateAdminForms();
+    } else {
+        err.textContent = 'Usuario o contraseña incorrectos';
+        err.style.display = 'block';
+    }
+}
+
+document.getElementById('login-pass').addEventListener('keydown', function(e) { if (e.key === 'Enter') doLogin(); });
+document.getElementById('login-user').addEventListener('keydown', function(e) { if (e.key === 'Enter') doLogin(); });
+
+function doLogout() {
+    adminLoggedIn = false;
+    document.getElementById('admin-dashboard').style.display = 'none';
+    document.getElementById('admin-login').style.display = 'flex';
+    document.getElementById('login-user').value = '';
+    document.getElementById('login-pass').value = '';
+    document.getElementById('login-error').style.display = 'none';
+}
+
+function showAdminTab(tabId) {
+    var tabs = document.querySelectorAll('.admin-tab');
+    for (var i = 0; i < tabs.length; i++) tabs[i].style.display = 'none';
+    document.getElementById(tabId).style.display = 'block';
+    var btns = document.querySelectorAll('.admin-sl');
+    for (var j = 0; j < btns.length; j++) {
+        btns[j].classList.toggle('active', btns[j].getAttribute('data-tab') === tabId);
+    }
+}
+
+function populateAdminForms() {
+    document.getElementById('adm-hero-title').value = siteData.hero.title;
+    document.getElementById('adm-hero-subtitle').value = siteData.hero.subtitle;
+    document.getElementById('adm-hero-img').value = siteData.hero.image;
+    document.getElementById('adm-about-title').value = siteData.about.title;
+    document.getElementById('adm-about-text').value = siteData.about.text;
+    document.getElementById('adm-about-text2').value = siteData.about.text2;
+    document.getElementById('adm-about-img').value = siteData.about.image;
+    document.getElementById('adm-contact-address').value = siteData.contact.address;
+    document.getElementById('adm-contact-phone').value = siteData.contact.phone;
+    document.getElementById('adm-contact-email').value = siteData.contact.email;
+    document.getElementById('adm-contact-hours').value = siteData.contact.hours;
+    renderAdminProjects();
+    renderAdminServices();
+    renderAdminStats();
+}
+
+function saveHero() {
+    siteData.hero.title = document.getElementById('adm-hero-title').value;
+    siteData.hero.subtitle = document.getElementById('adm-hero-subtitle').value;
+    siteData.hero.image = document.getElementById('adm-hero-img').value;
+    saveData(); renderSite(); showToast('Sección de inicio actualizada');
+}
+function saveAbout() {
+    siteData.about.title = document.getElementById('adm-about-title').value;
+    siteData.about.text = document.getElementById('adm-about-text').value;
+    siteData.about.text2 = document.getElementById('adm-about-text2').value;
+    siteData.about.image = document.getElementById('adm-about-img').value;
+    saveData(); renderSite(); showToast('Sección "Nosotros" actualizada');
+}
+function saveContact() {
+    siteData.contact.address = document.getElementById('adm-contact-address').value;
+    siteData.contact.phone = document.getElementById('adm-contact-phone').value;
+    siteData.contact.email = document.getElementById('adm-contact-email').value;
+    siteData.contact.hours = document.getElementById('adm-contact-hours').value;
+    saveData(); renderSite(); showToast('Información de contacto actualizada');
+}
+
+function renderAdminProjects() {
+    var list = document.getElementById('admin-projects-list');
+    var html = '';
+    for (var i = 0; i < siteData.projects.length; i++) {
+        var p = siteData.projects[i];
+        html += '<div style="display:flex;align-items:center;gap:16px;padding:16px;border-radius:12px;border:1px solid #262626;background:#0a0a0a;transition:border-color .3s;" onmouseover="this.style.borderColor=\'#404040\'" onmouseout="this.style.borderColor=\'#262626\'">' +
+            '<img src="' + p.image + '" alt="' + p.title + '" style="width:56px;height:56px;border-radius:8px;object-fit:cover;flex-shrink:0;" onerror="this.src=\'https://picsum.photos/seed/fallback-' + p.id + '/100/100\'">' +
+            '<div style="flex:1;min-width:0;"><div style="font-size:14px;font-weight:500;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">' + p.title + '</div>' +
+            '<div style="font-size:12px;color:#57534e;text-transform:capitalize;">' + p.category + '</div></div>' +
+            '<button onclick="editProject(' + p.id + ')" style="padding:6px 12px;font-size:12px;color:#a8a29e;border:1px solid #404040;border-radius:8px;background:none;cursor:pointer;transition:all .3s;white-space:nowrap;" onmouseover="this.style.color=\'#fff\';this.style.borderColor=\'#57534e\'" onmouseout="this.style.color=\'#a8a29e\';this.style.borderColor=\'#404040\'">Editar</button>' +
+            '<button onclick="deleteProject(' + p.id + ')" style="padding:6px 12px;font-size:12px;color:rgba(248,113,113,.7);border:1px solid rgba(239,68,68,.1);border-radius:8px;background:none;cursor:pointer;transition:all .3s;white-space:nowrap;" onmouseover="this.style.color=\'#f87171\';this.style.borderColor=\'rgba(239,68,68,.3)\';this.style.background=\'rgba(239,68,68,.05)\'" onmouseout="this.style.color=\'rgba(248,113,113,.7)\';this.style.borderColor=\'rgba(239,68,68,.1)\';this.style.background=\'none\'">Eliminar</button></div>';
+    }
+    list.innerHTML = html;
+}
+
+function openProjectForm(proj) {
+    document.getElementById('project-form').style.display = 'block';
+    document.getElementById('project-form-title').textContent = proj ? 'Editar Proyecto' : 'Nuevo Proyecto';
+    document.getElementById('adm-proj-id').value = proj ? proj.id : '';
+    document.getElementById('adm-proj-title').value = proj ? proj.title : '';
+    document.getElementById('adm-proj-cat').value = proj ? proj.category : 'residencial';
+    document.getElementById('adm-proj-desc').value = proj ? proj.description : '';
+    document.getElementById('adm-proj-img').value = proj ? proj.image : '';
+}
+function closeProjectForm() { document.getElementById('project-form').style.display = 'none'; }
+function editProject(id) {
+    for (var i = 0; i < siteData.projects.length; i++) {
+        if (siteData.projects[i].id === id) { openProjectForm(siteData.projects[i]); return; }
+    }
+}
+function deleteProject(id) {
+    if (!confirm('¿Eliminar este proyecto?')) return;
+    siteData.projects = siteData.projects.filter(function(p) { return p.id !== id; });
+    saveData(); renderAdminProjects(); renderProjects(); showToast('Proyecto eliminado');
+}
+function saveProject() {
+    var id = document.getElementById('adm-proj-id').value;
+    var data = {
+        title: document.getElementById('adm-proj-title').value.trim(),
+        category: document.getElementById('adm-proj-cat').value,
+        description: document.getElementById('adm-proj-desc').value.trim(),
+        image: document.getElementById('adm-proj-img').value.trim() || 'https://picsum.photos/seed/proj-' + Date.now() + '/600/800'
+    };
+    if (!data.title) { showToast('El título es obligatorio', 'error'); return; }
+    if (id) {
+        for (var i = 0; i < siteData.projects.length; i++) {
+            if (siteData.projects[i].id === parseInt(id)) {
+                siteData.projects[i].title = data.title;
+                siteData.projects[i].category = data.category;
+                siteData.projects[i].description = data.description;
+                siteData.projects[i].image = data.image;
+                break;
+            }
+        }
+    } else {
+        data.id = Date.now();
+        siteData.projects.push(data);
+    }
+    saveData(); closeProjectForm(); renderAdminProjects(); renderProjects();
+    showToast(id ? 'Proyecto actualizado' : 'Proyecto agregado');
+}
+
+function renderAdminServices() {
+    var list = document.getElementById('admin-services-list');
+    var html = '';
+    for (var i = 0; i < siteData.services.length; i++) {
+        var s = siteData.services[i];
+        html += '<div style="padding:20px;border-radius:12px;border:1px solid #262626;background:#0a0a0a;">' +
+            '<div style="display:flex;align-items:center;gap:12px;margin-bottom:12px;"><span class="iconify" data-icon="' + s.icon + '" data-width="18" style="color:#d4d4d4;"></span><span style="font-size:12px;color:#57534e;">Servicio ' + (i + 1) + '</span></div>' +
+            '<input class="fi adm-svc-title" data-idx="' + i + '" value="' + s.title.replace(/"/g, '&quot;') + '" placeholder="Título del servicio" style="margin-bottom:8px;">' +
+            '<textarea class="fi adm-svc-desc" data-idx="' + i + '" rows="2" placeholder="Descripción">' + s.description + '</textarea></div>';
+    }
+    list.innerHTML = html;
+}
+function saveServices() {
+    var titles = document.querySelectorAll('.adm-svc-title');
+    var descs = document.querySelectorAll('.adm-svc-desc');
+    for (var i = 0; i < titles.length; i++) {
+        var idx = parseInt(titles[i].getAttribute('data-idx'));
+        siteData.services[idx].title = titles[i].value;
+        siteData.services[idx].description = descs[i].value;
+    }
+    saveData(); renderServices(); showToast('Servicios actualizados');
+}
+
+function renderAdminStats() {
+    var list = document.getElementById('admin-stats-list');
+    var html = '';
+    for (var i = 0; i < siteData.stats.length; i++) {
+        var s = siteData.stats[i];
+        html += '<div style="padding:20px;border-radius:12px;border:1px solid #262626;background:#0a0a0a;">' +
+            '<span style="font-size:12px;color:#57534e;margin-bottom:12px;display:block;">Estadística ' + (i + 1) + '</span>' +
+            '<div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">' +
+            '<input class="fi adm-stat-num" data-idx="' + i + '" value="' + s.number + '" placeholder="120+">' +
+            '<input class="fi adm-stat-label" data-idx="' + i + '" value="' + s.label.replace(/"/g, '&quot;') + '" placeholder="Label">' +
+            '</div></div>';
+    }
+    list.innerHTML = html;
+}
+function saveStats() {
+    var nums = document.querySelectorAll('.adm-stat-num');
+    var labels = document.querySelectorAll('.adm-stat-label');
+    for (var i = 0; i < nums.length; i++) {
+        var idx = parseInt(nums[i].getAttribute('data-idx'));
+        siteData.stats[idx].number = nums[i].value;
+        siteData.stats[idx].label = labels[i].value;
+    }
+    saveData(); renderStats(); showToast('Estadísticas actualizadas');
+}
+
+document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') {
+        if (document.getElementById('thank-modal').style.display === 'flex') closeThankModal();
+        else if (document.getElementById('admin-overlay').style.display === 'block') closeAdmin();
+    }
+});
+
+loadData();
+renderSite();
+observeReveals();
+</script>
+</body>
+</html>
