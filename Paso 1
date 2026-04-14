@@ -1,7 +1,0 @@
-cd /ruta/al/proyecto
-git init
-git add .
-git commit -m "Sitio web CT Arquitectos"
-git branch -M main
-git remote add origin https://github.com/ctarquitectos/ct-arquitectos-web.git
-git push -u origin main
